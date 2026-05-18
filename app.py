@@ -4,7 +4,7 @@ import datetime
 import requests
 
 # --- Page Setup ---
-st.set_page_config(page_title="Tragedy That Happened Today", page_icon="🌑", layout="centered")
+st.set_page_config(page_title="Things That Happened Today", page_icon="☠️", layout="centered")
 
 # Custom CSS for dark mission theme
 st.markdown("""
@@ -67,7 +67,7 @@ def fetch_tragedy_for_day(month, day):
     return pd.DataFrame()
 
 # --- Application UI ---
-st.title("☠️ On This Day ☠️")
+st.title("☠️ Fun Things Calendar ☠️")
 st.write("Select a date to query the archives. The system retrieves historical disasters, images, and research links.")
 
 # Date picker in the center
