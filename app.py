@@ -34,7 +34,7 @@ def fetch_tragedy_for_day(month, day):
         'shooting', 'genocide', 'execution', 'riot', 'stampede', 'mutiny',
         
         # Casualties & Catch-alls
-        'killed', 'fatal', 'deadly', 'casualties', 'deaths', 'victims','triumph'
+        'killed', 'fatal', 'deadly', 'casualties', 'deaths', 'victims','kittens'
     ]
 
     
