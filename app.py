@@ -67,7 +67,7 @@ def fetch_tragedy_for_day(month, day):
     return pd.DataFrame()
 
 # --- Application UI ---
-st.title("🌑 Historical Tragedy Calendar")
+st.title("☠️ On This Day ☠️")
 st.write("Select a date to query the archives. The system retrieves historical disasters, images, and research links.")
 
 # Date picker in the center
