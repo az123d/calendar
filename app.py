@@ -19,9 +19,24 @@ def fetch_tragedy_for_day(month, day):
     """Calls Wikipedia API and extracts events, links, and images."""
     url = f"https://en.wikipedia.org/api/rest_v1/feed/onthisday/events/{month}/{day}"
     headers = {'User-Agent': 'HistoricalCalendarApp/2.0 (Mission Support Research)'}
-    keywords = ['disaster', 'earthquake', 'fire', 'crash', 'explosion', 
-                'killed', 'assassination', 'massacre', 'tsunami', 'hurricane', 
-                'sinking', 'tornado', 'flood', 'bombing', 'terrorist']
+    keywords = [
+        # Natural Disasters
+        'earthquake', 'tsunami', 'hurricane', 'tornado', 'flood', 'cyclone', 
+        'typhoon', 'volcano', 'eruption', 'avalanche', 'landslide', 'famine', 
+        'drought', 'blizzard', 'pandemic', 'epidemic', 'plague',
+        
+        # Accidents & Industrial
+        'disaster', 'fire', 'crash', 'explosion', 'sinking', 'shipwreck', 
+        'derailment', 'collision', 'collapse', 'meltdown', 'spill',
+        
+        # Violence & Conflict
+        'assassination', 'massacre', 'bombing', 'terrorist', 'terrorism', 
+        'shooting', 'genocide', 'execution', 'riot', 'stampede', 'mutiny',
+        
+        # Casualties & Catch-alls
+        'killed', 'fatal', 'deadly', 'casualties', 'deaths', 'victims','triumph'
+    ]
+
     
     try:
         response = requests.get(url, headers=headers, timeout=5)
