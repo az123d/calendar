@@ -67,7 +67,7 @@ def fetch_tragedy_for_day(month, day):
     return pd.DataFrame()
 
 # --- Application UI ---
-st.markdown("<h1 style='text-align: center;'>☠️ Fun Things Calendar ☠️</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center;'>☠️ Fun Times Calendar ☠️</h1>", unsafe_allow_html=True)
 st.write("Select a date to query the archives")
 
 # Date picker in the center
