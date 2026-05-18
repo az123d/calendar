@@ -6,6 +6,7 @@ import requests
 # --- Page Setup ---
 st.set_page_config(page_title="Chronicle of Tragedy", page_icon="🌑", layout="centered")
 
+# Custom CSS for dark mission theme
 st.markdown("""
     <style>
     .main { background-color: #1a1a1a; color: #ffffff; }
@@ -31,8 +32,6 @@ def fetch_tragedy_for_day(month, day):
             for event in events:
                 text = event.get('text', '')
                 if any(word in text.lower() for word in keywords):
-                    
-                    # Attempt to get an image and article link if available
                     img_url = None
                     article_url = None
                     pages = event.get('pages', [])
@@ -42,7 +41,6 @@ def fetch_tragedy_for_day(month, day):
                         if thumbnail:
                             img_url = thumbnail.get('source')
 
-                    # Clean up the year to ensure it's treated as an integer for sorting
                     year_val = event.get('year')
                     try:
                         year_int = int(year_val)
@@ -58,25 +56,22 @@ def fetch_tragedy_for_day(month, day):
                     })
             
             if matches:
-                # Sort by year (Most recent first)
                 df = pd.DataFrame(matches)
-                df = df.sort_values(by="SortYear", ascending=False).drop(columns=["SortYear"])
+                # Sort by year (Most recent first)
+                df = df.sort_values(by="SortYear", ascending=False).reset_index(drop=True)
                 return df
                 
-    except Exception as e:
+    except Exception:
         st.error("Network error: Unable to reach historical database.")
     
     return pd.DataFrame()
 
 # --- Application UI ---
 st.title("🌑 Historical Tragedy Calendar")
-st.write("Select a date to query the archives. The system will retrieve historical disasters, images, and research links.")
+st.write("Select a date to query the archives. The system retrieves historical disasters, images, and research links.")
 
-# Add a sidebar for extra controls
-with st.sidebar:
-    st.header("Control Panel")
-    selected_date = st.date_input("Investigation Date:", datetime.date.today())
-    st.caption("Change the date here to trigger a new search.")
+# Date picker in the center
+selected_date = st.date_input("Investigation Date:", datetime.date.today())
 
 # Trigger the dynamic fetch
 with st.spinner(f"Querying archives for {selected_date.strftime('%B %d')}..."):
@@ -87,37 +82,28 @@ st.divider()
 # --- Display Results ---
 if not results_df.empty:
     st.subheader(f"Historical Records: {selected_date.strftime('%B %d')}")
-    st.write(f"Found **{len(results_df)}** significant incidents.")
     
-    for _, row in results_df.iterrows():
-        # Use Streamlit expanders for a cleaner, modern look
-        with st.expander(f"🚩 {row['Year']}: {row['Event'][:60]}..."):
-            
+    # Loop through results and handle expansion
+    for index, row in results_df.iterrows():
+        # The first entry (index 0) is expanded by default
+        is_expanded = (index == 0)
+        
+        with st.expander(f"🚩 {row['Year']}: {row['Event'][:60]}...", expanded=is_expanded):
             col1, col2 = st.columns([1, 3])
             
             with col1:
                 if pd.notna(row['Image']):
                     st.image(row['Image'], use_column_width=True)
                 else:
-                    st.write("*(No image on file)*")
+                    st.write("*(No image)*")
                     
             with col2:
-                st.write(f"**Detailed Summary:** {row['Event']}")
+                st.write(f"**Summary:** {row['Event']}")
                 if pd.notna(row['Link']):
-                    st.markdown(f"[➡️ Read full declassified report (Wikipedia)]({row['Link']})")
-
-    # Add Export Capability
-    st.divider()
-    csv = results_df[['Year', 'Event', 'Link']].to_csv(index=False).encode('utf-8')
-    st.download_button(
-        label="📥 Download Daily Report (CSV)",
-        data=csv,
-        file_name=f"Tragedy_Report_{selected_date.strftime('%b_%d')}.csv",
-        mime="text/csv",
-    )
+                    st.markdown(f"[➡️ Declassified Report]({row['Link']})")
     
 else:
-    st.info(f"No major tragedies found in the primary archive for {selected_date.strftime('%B %d')}.")
+    st.info(f"No major tragedies found in the archive for {selected_date.strftime('%B %d')}.")
 
 st.markdown("---")
-st.caption("Real-time data provided via Wikipedia REST API.")
+st.caption("Real-time mission data provided via Wikipedia REST API.")
