@@ -68,8 +68,7 @@ def fetch_tragedy_for_day(month, day):
 
 # --- Application UI ---
 st.markdown("<h1 style='text-align: center;'>☠️ Fun Times Calendar ☠️</h1>", unsafe_allow_html=True)
-st.write("Select a date to query the archives")
-
+st.markdown("<p class='centered-text'>Select a date to query the archives.</p>", unsafe_allow_html=True)
 # Date picker in the center
 selected_date = st.date_input("Investigation Date:", datetime.date.today())
 
