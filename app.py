@@ -68,7 +68,7 @@ def fetch_tragedy_for_day(month, day):
 
 # --- Application UI ---
 st.title("☠️ Fun Things Calendar ☠️")
-st.write("Select a date to query the archives. The system retrieves historical disasters, images, and research links.")
+st.write("Select a date to query the archives")
 
 # Date picker in the center
 selected_date = st.date_input("Investigation Date:", datetime.date.today())
