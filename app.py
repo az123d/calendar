@@ -4,7 +4,7 @@ import datetime
 import requests
 
 # --- Page Setup ---
-st.set_page_config(page_title="Chronicle of Tragedy", page_icon="🌑", layout="centered")
+st.set_page_config(page_title="Tragedy That Happened Today", page_icon="🌑", layout="centered")
 
 # Custom CSS for dark mission theme
 st.markdown("""
