@@ -107,7 +107,7 @@ if not results_df.empty:
             
             with col1:
                 if pd.notna(row['Image']):
-                    st.image(row['Image'], use_column_width=True)
+                    st.image(row['Image'], use_container_width=True)
                 else:
                     st.write("*(No image)*")
                     
